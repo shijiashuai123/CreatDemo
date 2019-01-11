@@ -1,0 +1,9 @@
+.Hook_Box {
+    width: 100%;
+    border: 1px solid blue;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 50px;
+    background-color: #000;
+}
