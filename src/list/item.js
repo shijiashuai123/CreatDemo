@@ -2,14 +2,14 @@ import React  from 'react';
 
 // 新建一个react函数组件 大写字母开头的变量 （要有retrun()）
 function ListTempTest(props) {
-    console.log(props)
+    // console.log(props)
     return (
         <li>{props.obj.value}</li>
     )
 }
 // 新建的组件 大写开头里面有return()
 function NumberList(props) {
-    console.log(props.numbers)
+    // console.log(props.numbers)
     // 遍历第一种写法
 
     // const numbers = props.numbers;

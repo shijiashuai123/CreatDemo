@@ -19,7 +19,7 @@ class Term extends Component {
         })
     }
     render() {
-        console.log(this.state.judge)
+        // console.log(this.state.judge)
         var ele = null
         if (this.state.judge) {
             ele =   <TestCom name={this.state.termName} onClick={this.changeJudgeValue}/>
