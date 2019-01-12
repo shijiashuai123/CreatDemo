@@ -12,6 +12,7 @@ import List from './list/index'
 import NumberList from './list/item'
 import TestComApi from './Component/api'
 import HookFun from './hookFun/index'
+import AjaxTest from './ajax/index'
 
 function Name(props) {
     // console.log(props)
@@ -36,7 +37,7 @@ class App extends Component {
                 {id:3, value:'测试3'},
                 {id:4, value:'测试4'},
             ],
-            judgeHookFunClose: true
+            judgeHookFunClose: false // 关闭钩子函数测试
         }
     }
     changeHookFunShowState() {
@@ -45,32 +46,57 @@ class App extends Component {
         })
     }
     render() {
-        var ele = null
+        var ele = null, dom = null
         this.state.judgeHookFunClose ? ele = <HookFun /> : ele = ''
+        this.state.judgeHookFunClose ? dom = <div>
+            {ele}
+            <Button onClick={(e) => this.changeHookFunShowState(e)}>点击切换</Button>
+            <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo" />
+            </header>
+            <Frist name={this.state.name} year={this.state.year}/>
+            <Name name="这是自定义参数" obj={this.state}/>
+            <TestCom />
+            <Clock />
+            <FunTest />
+            <hr />
+            <Event />
+            <hr />
+            <Term judgeState={this.state.judgeState}/>
+            <hr />
+            < List name={this.state.listName}/>
+            <hr />
+            < NumberList numbers={this.state.lists}/>
+            <hr />
+            <TestComApi />
+            <AjaxTest />
+        </div> : dom = <AjaxTest />
         return (
               <div className="App">
-                    <div>
-                        {ele}
-                        <Button onClick={(e) => this.changeHookFunShowState(e)}>点击切换</Button>
-                        <header className="App-header">
-                            <img src={logo} className="App-logo" alt="logo" />
-                        </header>
-                        <Frist name={this.state.name} year={this.state.year}/>
-                        <Name name="这是自定义参数" obj={this.state}/>
-                        <TestCom />
-                        <Clock />
-                        <FunTest />
-                        <hr />
-                        <Event />
-                        <hr />
-                        <Term judgeState={this.state.judgeState}/>
-                        <hr />
-                        < List name={this.state.listName}/>
-                        <hr />
-                        < NumberList numbers={this.state.lists}/>
-                        <hr />
-                        <TestComApi />
-                    </div>
+                    {dom}
+                    {/*<div>*/}
+                        {/*{ele}*/}
+                        {/*<Button onClick={(e) => this.changeHookFunShowState(e)}>点击切换</Button>*/}
+                        {/*<header className="App-header">*/}
+                            {/*<img src={logo} className="App-logo" alt="logo" />*/}
+                        {/*</header>*/}
+                        {/*<Frist name={this.state.name} year={this.state.year}/>*/}
+                        {/*<Name name="这是自定义参数" obj={this.state}/>*/}
+                        {/*<TestCom />*/}
+                        {/*<Clock />*/}
+                        {/*<FunTest />*/}
+                        {/*<hr />*/}
+                        {/*<Event />*/}
+                        {/*<hr />*/}
+                        {/*<Term judgeState={this.state.judgeState}/>*/}
+                        {/*<hr />*/}
+                        {/*< List name={this.state.listName}/>*/}
+                        {/*<hr />*/}
+                        {/*< NumberList numbers={this.state.lists}/>*/}
+                        {/*<hr />*/}
+                        {/*<TestComApi />*/}
+                        {/*<AjaxTest />*/}
+                    {/*</div>*/}
               </div>
         );
     }

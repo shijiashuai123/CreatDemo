@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import './util/reset.css'
 import registerServiceWorker from './registerServiceWorker';
 import 'element-theme-default';
 

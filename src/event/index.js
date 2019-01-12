@@ -13,7 +13,7 @@ class Event extends Component {
         };
         // 这边绑定是必要的，这样 `this` 才能在回调函数中使用。 如果bind方法麻烦的话，可以用属性初始化器语法或者在事件中使用箭头函数解决this的问题
         // 构造函数中，建议使用属性初始化语法，因为在事件中用箭头函数的话，这个回调函数作为一个属性值传入低阶组件，这些组件可能会进行额外的重新渲染
-        // this.handleClick = this.handleClick.bind(this);
+        // this.handleClick = this.handleClick.bind(this);   //绑定挂载事件
     }
     // 使用箭头函数
     handleClick(name, e){
