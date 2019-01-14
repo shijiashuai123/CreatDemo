@@ -8,7 +8,7 @@ class Term extends Component {
         super(props);
         this.state = {
             termName: 'term测试',
-            judge: this.props.judgeState,
+            judge: true,
         };
     }
     // 属性初始化器语法

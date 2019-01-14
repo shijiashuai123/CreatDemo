@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+//路由的2种形式： hash(HashRouter) , H5的historyApi(BroswerRouter)是路由的容器，是组件，要包在路由的外面
+// import { HashRouter as Router,Route} from 'react-router-dom'
 import { Button } from 'element-react';
 import Frist from './first/index'
 import FunTest from './fun/index'
@@ -13,6 +15,7 @@ import NumberList from './list/item'
 import TestComApi from './Component/api'
 import HookFun from './hookFun/index'
 import AjaxTest from './ajax/index'
+import Side from './layout/index'
 
 function Name(props) {
     // console.log(props)
@@ -30,13 +33,8 @@ class App extends Component {
             name: '测试1',
             year: 18,
             judgeState: true,
-            listName: '列表',
-            lists: [
-                {id:1, value:'测试1'},
-                {id:2, value:'测试2'},
-                {id:3, value:'测试3'},
-                {id:4, value:'测试4'},
-            ],
+
+
             judgeHookFunClose: false // 关闭钩子函数测试
         }
     }
@@ -70,9 +68,12 @@ class App extends Component {
             <hr />
             <TestComApi />
             <AjaxTest />
-        </div> : dom = <AjaxTest />
+        </div> :
+        // dom = <AjaxTest />
+        dom = <div></div>
         return (
               <div className="App">
+                    <Side />
                     {dom}
                     {/*<div>*/}
                         {/*{ele}*/}

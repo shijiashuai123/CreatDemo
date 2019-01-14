@@ -18,7 +18,7 @@ class List extends Component {
         return(
             <div className="List_Box">
                 <p className="List_Tit">{this.state.listName}</p>
-                <p className="list_name">{this.props.name}</p>
+                <p className="list_name">{this.state.listName}</p>
                 <p>{this.state.number}</p>
                 <ul>
                     {listItems}

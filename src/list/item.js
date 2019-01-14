@@ -20,7 +20,12 @@ function NumberList(props) {
     // return <ul>{listItems}</ul>
     //
     // 第二种写法，JSX 允许在大括号中嵌入任何表达式 但是不能出现var const let关键字
-    const numbers = props.numbers;
+    const numbers = [
+        {id:1, value:'测试1'},
+        {id:2, value:'测试2'},
+        {id:3, value:'测试3'},
+        {id:4, value:'测试4'},
+    ]
     return (
         <ul>
             {

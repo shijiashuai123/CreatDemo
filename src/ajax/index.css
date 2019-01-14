@@ -1,9 +1,9 @@
 .Type_box {
-    width: 100%;
-    margin-top: 40px;
     display: flex;
-
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 .Type_item {
-    margin-left: 50px;
+    width: 58%;
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import * as review from '../api/review'
-import { Table, Button, Dialog, Form, Input, Message} from 'element-react';
+import { Table, Button, Dialog, Form, Input, Message, Pagination} from 'element-react';
 import './index.css'
 const img = require('../img/loading.gif')
 
@@ -18,7 +18,7 @@ class AjaxTest extends React.Component {
                 {label: "操作", align: 'center', width: 200, render:(row, column, index) => {
                     return (
                         <span>
-                            <Button onClick={this.checkQList.bind(this, row)} size="small">查看</Button>
+                            <Button onClick={this.checkQList.bind(this, row.id, 'first')} size="small">查看</Button>
                             <Button onClick={this.editQType.bind(this, row)} plain={true} type="info" size="small">编辑</Button>
                             <Button type="danger" size="small">删除</Button>
                         </span>
@@ -32,7 +32,7 @@ class AjaxTest extends React.Component {
             qList: [],
             Qcolumns: [
                 {label: "id", prop: 'id', width: 100, align: 'center'},
-                {label: "问题", prop: 'content', width: 300, align: 'center'},
+                {label: "问题", prop: 'content', width: 260, align: 'center'},
                 {label: "操作", align: 'center', render: (row, column, index) => {
                     return (
                         <span>
@@ -54,7 +54,7 @@ class AjaxTest extends React.Component {
             Acolumns: [
                 {label: "id", prop: 'id', width: 100, align: 'center'},
                 {label: "回复", prop: 'content',  align: 'center'},
-                {label: "操作", align: 'center', width: 260, render: (row, column, index) => {
+                {label: "操作", align: 'center', width: 280, render: (row, column, index) => {
                     return (
                         <span>
                             <Button type="info" size="small">查看回复</Button>
@@ -89,76 +89,104 @@ class AjaxTest extends React.Component {
             ediTypeListDialog: true
         })
     }
+    // 监听input的值
+    handleChangeTitle(val){
+        console.log(val)
+        this.setState({
+            eidtTypeObj: Object.assign({}, this.state.eidtTypeObj, { title: val }) // 改变对象中的值
+        })
+    }
     // 确定
     confirmBtn() {
         console.log('提交了')
+        console.log(this.state.eidtTypeObj)
         this.setState({
             ediTypeListDialog: false
         })
     }
     // 查看问题列表
-    checkQList(item, event) {
-        console.log(item)
+    checkQList(id, num, event) {
+        console.log(id)
+        if (num === 'first') {
+            this.setState({
+                page: 1
+            })
+        }
         this.setState({
             checkQChrLoadState: true,
-            checkAnswerObj: Object.assign({}, this.state.checkAnswerObj, { tid: item.id }) // 改变对象中的值
+            checkAnswerObj: Object.assign({}, this.state.checkAnswerObj, { tid: id }) // 改变对象中的值
+        }, () => {
+            review.typeQuestoinList(id, this.state.page, this.state.pageSize).then( res => {
+                console.log(res)
+                if (res.data.ret === 0) {
+                    this.setState({
+                        qList: res.data.lists,
+                        total: res.data.total,
+                        checkQChrLoadState: false,
+                    })
+                } else {
+                    Message({
+                        message: '请求失败',
+                        type: 'error',
+                        duration: 1 * 1000
+                    })
+                }
+            })
         })
-        review.typeQuestoinList(item.id, this.state.page, this.state.pageSize).then( res => {
-            console.log(res)
-            if (res.data.ret === 0) {
-                this.setState({
-                    qList: res.data.lists,
-                    total: res.data.total,
-                    checkQChrLoadState: false,
-                })
-            } else {
-                Message({
-                    message: '请求失败',
-                    type: 'error',
-                    duration: 1 * 1000
-                })
-            }
+    }
+    // 问题列表分页
+    changeQListPageFun(val) {
+        console.log(val)
+        this.setState({
+           page: val
+        }, () => {
+            this.checkQList(this.state.checkAnswerObj.tid)
         })
+    }
+    // 获取焦点
+    getInputFocus() {
+        this.refs.titleDom.focus()
+        console.log(this.refs.titleDom)
+        console.log(this.refs.titleDom.props.value)
     }
     // 查看回复
     checkAnswerBtn(item) {
         console.log(item.id)
         this.setState({
-            checkAnswerDialog: true,
             checkAnswerObj: Object.assign({}, this.state.checkAnswerObj, { pid: item.id }) // 改变对象中的值
-        })
-        setTimeout(() => {
+        }, () => {
             console.log(this.state.checkAnswerObj)
             review.getAnswerList(this.state.checkAnswerObj).then( res => {
                 console.log(res)
                 if (res.data.ret === 0) {
                     this.setState({
-                        checkAnswerList: res.data.lists
+                        checkAnswerList: res.data.lists,
+                        checkAnswerDialog: true,
                     })
                 }
             })
-        }, 300)
+        })
     }
     // 第一个渲染后调用
     componentDidMount() {
     }
     render() {
         var showQ = null
-        !this.state.qList.length ? showQ = <div style={{margin: '30px auto'}}>
+        !this.state.qList.length && this.state.page === 1 ? showQ = <div style={{margin: '30px auto'}}>
             {this.state.checkQChrLoadState ? <img style={{width: '40px', height: '40px'}} src={img} alt="" />: ''}
             {this.state.checkAnswerObj.tid ? <div>暂无数据</div> : ''}
-        </div> : showQ = <Table
-            className="Type_item"
-            style={{width: '50%', align: 'center'}}
+        </div> : showQ = <div className="Type_item"><Table
+            style={{width: '100%', align: 'center'}}
             columns={this.state.Qcolumns}
             data={this.state.qList}
             border={true}
         />
+        <Pagination style={{float: 'right', marginTop: '20px'}} layout="prev, pager, next" total={50} onCurrentChange={this.changeQListPageFun.bind(this)} currentPage={this.state.page}/>
+        </div>
         return (
             <div className="Type_box">
                 {/*类型列表*/}
                 <Table
-                    className="Type_item"
                     style={{width: '30%', align: 'center'}}
                     columns={this.state.columns}
                     data={this.state.typeList}
@@ -176,13 +204,14 @@ class AjaxTest extends React.Component {
                     <Dialog.Body>
                         <Form model={this.state.eidtTypeObj} labelWidth="80">
                             <Form.Item label="名字：">
-                                <Input value={this.state.eidtTypeObj.title}></Input>
+                                <Input ref="titleDom" value={this.state.eidtTypeObj.title} onChange={this.handleChangeTitle.bind(this)}></Input>
                             </Form.Item>
                         </Form>
                     </Dialog.Body>
                     <Dialog.Footer className="dialog-footer">
                         <Button onClick={ () => this.setState({ ediTypeListDialog: false }) }>取消</Button>
                         <Button type="primary" onClick={this.confirmBtn.bind(this)}>确定</Button>
+                        <Button type="primary" onClick={this.getInputFocus.bind(this)}>获取焦点</Button>
                     </Dialog.Footer>
                 </Dialog>
                 {/*问题列表*/}
@@ -199,7 +228,7 @@ class AjaxTest extends React.Component {
                     <Dialog.Body>
                         <Table
                             className="Type_item"
-                            style={{width: '90%', align: 'center'}}
+                            style={{width: '100%', align: 'center'}}
                             columns={this.state.Acolumns}
                             data={this.state.checkAnswerList}
                             border={true}
