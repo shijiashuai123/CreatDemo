@@ -1,6 +1,7 @@
 import React from 'react'
 import { Layout, Menu } from 'element-react'
 import './index.css'
+//路由的2种形式： hash(HashRouter) , H5的historyApi(BroswerRouter)是路由的容器，是组件，要包在路由的外面
 import { HashRouter as Router,Route} from 'react-router-dom'
 import AjaxTest from '../ajax/index'
 import Clock from '../clock/index'
@@ -95,14 +96,16 @@ class Side extends React.Component {
     }
     goHomePage() {
         this.setState({
-            name: '/'
+            name: '/',
+            menuName: '菜单1',
+            routeNmae: '问题分类'
         })
     }
     render() {
         return (
             <div className="layout_box">
                 <Layout.Col className="side_slide" style={{height: '100%', backgroundColor: '#304156', width: '180px', zIndex: '10'}}>
-                    <Menu defaultActive={this.state.name} className="el-menu-vertical-demo" uniqueOpened={true} onOpen={this.onOpen.bind(this)} onClose={this.onClose.bind(this)} theme="dark">
+                    <Menu defaultActive={this.state.name || '/'} className="el-menu-vertical-demo" uniqueOpened={true} onOpen={this.onOpen.bind(this)} onClose={this.onClose.bind(this)} theme="dark">
                         {
                             this.state.routeMenu.map((val, ind) =>
                                 <Menu.SubMenu index={val.index} key={ind} title={<span><i className="el-icon-menu"></i>{val.name}</span>}>

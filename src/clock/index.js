@@ -8,6 +8,7 @@ function FormattedDate(props) {
             </h2>
 }
 // 组件属性： defaultProps设置属性的默认值（是一个对象）
+// React.PropTypes 提供很多验证器 (validator) 来验证传入数据是否有效
 FormattedDate.defaultProps = {
     name: '史嘉帅',
     year: 18

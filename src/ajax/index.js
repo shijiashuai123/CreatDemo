@@ -187,7 +187,7 @@ class AjaxTest extends React.Component {
             <div className="Type_box">
                 {/*类型列表*/}
                 <Table
-                    style={{width: '30%', align: 'center'}}
+                    style={{width: '31%', align: 'center'}}
                     columns={this.state.columns}
                     data={this.state.typeList}
                     border={true}
