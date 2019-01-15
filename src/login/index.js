@@ -47,7 +47,7 @@ class Login1 extends React.Component {
         return (
             <div className="login_bg">
                 <span className="login_tit">welcome to React</span>
-                <span className="login_tit login_tit2">明天会更好</span>
+                <span className="login_tit login_tit2">小嗨管理系统</span>
                 <div className="login_box">
                     <ul className="login_top">
                         {
