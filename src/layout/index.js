@@ -14,6 +14,7 @@ import Event from '../event/index'
 import TestCom from '../Component/index'
 import FunTest from '../fun/index'
 import Frist from '../first/index'
+import TestRedux from '../testRedux/index'
 
 class Side extends React.Component {
     constructor() {
@@ -35,6 +36,7 @@ class Side extends React.Component {
                 {url: '/testCom', component: TestCom},
                 {url: '/funTest', component: FunTest},
                 {url: '/frist', component: Frist},
+                {url: '/testRedux', component: TestRedux},
             ],
             // 导航菜单
             routeMenu: [
@@ -60,7 +62,7 @@ class Side extends React.Component {
                 },
                 { index:'three', name: '菜单3',
                     list: [
-
+                      {curCom: '/testRedux', name: 'redux功能'},
                     ]
                 }
             ],

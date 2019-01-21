@@ -5,9 +5,15 @@ import App from './App';
 import './util/reset.css'
 import registerServiceWorker from './registerServiceWorker';
 import 'element-theme-default';
+import {Provider} from 'react-redux' // Provider是react-redux两个核心工具之一，作用：将store传递到每个项目中的组件中
+import store from './store/index'
 
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+      <App />
+  </Provider>,
+  document.getElementById('root'));
 registerServiceWorker();
 
 
