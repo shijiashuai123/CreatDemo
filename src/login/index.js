@@ -12,12 +12,36 @@ class Login1 extends React.Component {
                 {name: '登陆', id: 1},
                 {name: '注册', id: 2},
             ],
-            curId: 1
+            curId: 1,
+            loginPar: {
+                phone: '',
+                pw: ''
+            }
         }
     }
     changeReg(item) {
         this.setState({
             curId: item.id
+        })
+    }
+    loginFun() {
+        if (this.state.loginPar.phone || this.state.loginPar.pw) {
+            alert('不能为空')
+        } else {
+            localStorage.setItem('token', '165135434196846453')
+            window.location.reload()
+        }
+    } 
+    getPhone(val) {
+        console.log(val)
+        this.setState({
+            'loginPar.phone': val
+        })
+    }
+    getPw(val) {
+        console.log(val)
+        this.setState({
+            'loginPar.phone': val
         })
     }
     render() {
@@ -27,7 +51,7 @@ class Login1 extends React.Component {
                 <Checkbox checked>记住密码</Checkbox>
                 <span className="forget_ps">忘记密码</span>
             </div>
-            <Button className="confirm_btn" type="primary">登  陆</Button>
+            <Button className="confirm_btn" type="primary" onClick={this.loginFun.bind(this)}>登  陆</Button>
             <div className="third_party">第三方登陆
                 <p className="or_content">or</p>
                 <ul className="third_party_item">
@@ -57,8 +81,8 @@ class Login1 extends React.Component {
                         }
                     </ul>
                     <div className="login_info">
-                        <Input type="text" className="set_input" placeholder="账号" />
-                        <Input type="password" className="set_input1" placeholder="密码" />
+                        <Input type="text" className="set_input" onChange={this.getPhone.bind(this)} placeholder="账号" />
+                        <Input type="password" className="set_input1" onChange={this.getPw.bind(this)} placeholder="密码" />
                         {ele}
                         {/*<div>*/}
                             {/*<div className="remember_ps">*/}
